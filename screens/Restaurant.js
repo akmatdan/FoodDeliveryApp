@@ -1,4 +1,4 @@
-import Restaurant from './Home'
+import React from 'react'
 import {
   View,
   Text,
