@@ -85,7 +85,7 @@ const Home = ({ navigation }) => {
     const restaurantData = [
         {
             id: 1,
-            name: "By Dan Burger",
+            name: "By Dan's Burger",
             rating: 4.8,
             categories: [5, 7],
             priceRating: affordable,
@@ -128,7 +128,7 @@ const Home = ({ navigation }) => {
         },
         {
             id: 2,
-            name: "By Dan Pizza",
+            name: "By Dan's Pizza",
             rating: 4.8,
             categories: [6],
             priceRating: expensive,
@@ -179,7 +179,7 @@ const Home = ({ navigation }) => {
         },
         {
             id: 3,
-            name: "By Dan Hotdogs",
+            name: "By Dan's Hotdogs",
             rating: 4.8,
             categories: [3],
             priceRating: expensive,
@@ -206,7 +206,7 @@ const Home = ({ navigation }) => {
         },
         {
             id: 4,
-            name: "By Dan Sushi",
+            name: "By Dan's Sushi",
             rating: 4.8,
             categories: [8],
             priceRating: expensive,
@@ -286,7 +286,7 @@ const Home = ({ navigation }) => {
         {
 
             id: 6,
-            name: "By Dan Dessets",
+            name: "By Dan's Dessets",
             rating: 4.9,
             categories: [9],
             priceRating: affordable,

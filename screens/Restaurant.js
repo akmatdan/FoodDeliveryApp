@@ -39,12 +39,48 @@ const Restaurant = ({ route, navigation }) => {
           <Image 
             source={icons.back}
             resizeMode="contain"
-            style={{ width: 30, height: 30}}
+            style={{ width: 25, height: 25}}
           />
         </TouchableOpacity>
 
         {/* Restaurant Name Section */}
+        <View 
+          style={{
+            flex: 1,
+            alignItems: 'center', 
+            justifyContent: 'center'
+          }}
+        >
+          <View
+            style={{
+              height: 50,
+              alignItems: 'center',
+              justifyContent: 'center',
+              paddingHorizontal: SIZES.padding * 3,
+              borderRadius: SIZES.radius,
+              backgroundColor: COLORS.lightGray3
+            }}
+          >
+            <Text style={{...FONTS.h3}}>{restaurant?.name}</Text>
+          </View>
+        </View>
         
+        <TouchableOpacity
+          style={{
+            height: 50,
+            paddingRight: SIZES.padding * 2,
+            justifyContent: 'center'
+          }}
+        >
+          <Image 
+            source={icons.list}
+            resizeMode="contain"
+            style={{
+              width: 20,
+              height: 20,
+            }}
+          />
+        </TouchableOpacity>
       </View>
     )
   }
