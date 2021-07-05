@@ -14,11 +14,13 @@ import { icons, COLORS, SIZES, FONTS } from '../constants'
 
 const Restaurant = ({ route, navigation }) => {
 
-  
+  // State Hooks
   const scrollX = new Animated.Value(0);
-  // Hook
+
   const [restaurant, setRestaurant] = React.useState(null);
   const [currentLocation, setCurrentLocation] = React.useState(null);
+  
+  const [orderItems, setOrderItems] = React.useState([]);
 
   React.useEffect(() => {
     let { item, currentLocation } = route.params;
@@ -26,6 +28,64 @@ const Restaurant = ({ route, navigation }) => {
     setRestaurant(item)
     setCurrentLocation(currentLocation)
 })
+
+  // + and - orders quantity
+  function editOrder(action, menuId, price) {
+    
+    let orderList = orderItems.slice()
+    let item = orderList.filter(a => a.menuId == menuId)
+    
+    if(action == "+") {
+      // if I already added this item or ordered before
+      if(item.length > 0) {
+        let newQty = item[0].qty + 1
+        item[0].qty = newQty // updating item with new quantity
+        item[0].total = item[0].qty * price // updating the total price of items
+      } else {  // if I haven't added before 
+        const newItem = {
+          menuId: menuId,
+          qty: 1,
+          price: price,
+          total: price
+        }
+        orderList.push(newItem) // push the new item
+      }
+
+      setOrderItems(orderList)
+
+    } else {
+      if(item.length > 0) {
+        if(item[0]?.qty > 0) {
+          let newQty = item[0].qty - 1
+          item[0].qty = newQty
+          item[0].total = newQty * price
+        }
+      }
+
+      setOrderItems(orderList)
+    }
+  }
+
+  function getOrderQty(menuId) {
+    let orderItem = orderItems.filter(a => a.menuId == menuId)
+
+    if(orderItem.length > 0) {
+      return orderItem[0].qty
+    }
+    return 0
+  }
+
+  function getBasketItemCount() {
+    let itemCount = orderItems.reduce((a, b) => a + (b.qty || 0), 0)
+
+    return itemCount
+  }
+
+  function sumOrder() {
+    let total = orderItems.reduce((a, b) => a + (b.total || 0), 0)
+
+    return total.toFixed(2)
+  }
 
   function renderHeader() {
     return (
@@ -142,6 +202,7 @@ const Restaurant = ({ route, navigation }) => {
                       borderTopLeftRadius: 25,
                       borderBottomLeftRadius: 25
                     }}
+                    onPress={() => editOrder("-", item.menuId, item.price)}
                   >
                     <Text style={{ ...FONTS.body1 }}>-</Text>
                   </TouchableOpacity>
@@ -154,7 +215,7 @@ const Restaurant = ({ route, navigation }) => {
                       justifyContent: 'center'
                     }}
                   >
-                    <Text style={{ ...FONTS.h2}}>5</Text>
+                    <Text style={{ ...FONTS.h2}}>{getOrderQty(item.menuId)}</Text>
                   </View>
 
                   <TouchableOpacity
@@ -166,6 +227,7 @@ const Restaurant = ({ route, navigation }) => {
                       borderTopRightRadius: 25,
                       borderBottomRightRadius: 25,
                     }}
+                    onPress={() => editOrder("+", item.menuId, item.price)}
                   >
                     <Text style={{ ...FONTS.body1 }}>+</Text>
                   </TouchableOpacity>
@@ -294,11 +356,11 @@ const Restaurant = ({ route, navigation }) => {
             
             <Text style={{
               ...FONTS.h3
-            }}>Items in Cart</Text>
+            }}>{getBasketItemCount()} Items in Cart</Text>
 
             <Text style={{
               ...FONTS.h3
-            }}>$45</Text>
+            }}>${sumOrder()}</Text>
           </View>
 
           <View style={{
