@@ -398,18 +398,26 @@ const Restaurant = ({ route, navigation }) => {
           </View>
 
           {/* Order button */}
-          <View style={{
+          <View 
+          style={{
             padding: SIZES.padding * 2,
             alignItems: 'center',
             justifyContent: 'center'
-          }}>
-            <TouchableOpacity style={{
+          }}
+          >
+            <TouchableOpacity 
+            style={{
               width: SIZES.width * 0.9,
               padding: SIZES.padding,
               backgroundColor: COLORS.primary,
               alignItems: 'center',
               borderRadius: SIZES.radius
-            }}>
+            }}
+            onPress={() => navigation.navigate("OrderDelivery", {
+              restaurant: restaurant,
+              currentLocation: currentLocation
+            })}
+            >
               <Text style={{ color: COLORS.white, ...FONTS.h3 }}>Order</Text>
             </TouchableOpacity>
           </View>
